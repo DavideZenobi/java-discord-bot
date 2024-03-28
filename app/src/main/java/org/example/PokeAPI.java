@@ -13,19 +13,27 @@ import com.google.gson.JsonObject;
 
 public class PokeAPI {
     
-    public static void getRandomPokemon() {
+    public static JsonObject getRandomPokemon() {
+        int randomNumber = (int) (Math.random() * (1025 - 1) + 1);
+        JsonObject pokemonJson = null;
+        try {
+            pokemonJson = call(randomNumber);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 
+        return pokemonJson;
     }
 
     public static void getPokemonByName(String name) {
 
     }
 
-    public static JsonObject call() throws URISyntaxException, IOException, InterruptedException {
+    public static JsonObject call(int randomNumber) throws URISyntaxException, IOException, InterruptedException {
         Gson gson = new Gson();
 
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(new URI("https://pokeapi.co/api/v2/pokemon/pikachu"))
+            .uri(new URI("https://pokeapi.co/api/v2/pokemon/" + randomNumber))
             .GET()
             .build();
 
