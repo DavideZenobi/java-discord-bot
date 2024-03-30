@@ -1,10 +1,9 @@
 package org.example;
 
-import org.example.battle.Battle;
+import org.example.battle.BattleHandler;
+import org.example.discord.DiscordHandler;
 import org.jetbrains.annotations.NotNull;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -27,9 +26,9 @@ public class BotCommands extends ListenerAdapter {
 
     private void handleBattleCommand(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
-        Battle battle = new Battle(event);
-        battle.start();
-        //event.getHook().sendMessageEmbeds(embed1.build(), embed2.build(), embed3.build(), embed4.build()).queue();
+        BattleHandler battle = new BattleHandler(new DiscordHandler(event.getHook()), event);
+        battle.startSetup();
+        battle.run();
     }
 
     private void handleTestCommand(SlashCommandInteractionEvent event) {

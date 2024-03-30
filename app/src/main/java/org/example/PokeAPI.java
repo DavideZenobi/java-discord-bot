@@ -12,12 +12,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class PokeAPI {
+
+    private static final String MOVEMENT_URL = "https://pokeapi.co/api/v2/move/";
+    private static final String POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
+    private static final int MAX_POKEMON_LIST = 1025;
+    private static final int MAX_MOVE_LIST = 919;
     
     public static JsonObject getRandomPokemon() {
-        int randomNumber = (int) (Math.random() * (1025 - 1) + 1);
+        int randomNumber = (int) (Math.random() * (MAX_POKEMON_LIST - 1) + 1);
         JsonObject pokemonJson = null;
         try {
-            pokemonJson = call(randomNumber);
+            pokemonJson = call(POKEMON_URL, randomNumber);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
@@ -25,15 +30,24 @@ public class PokeAPI {
         return pokemonJson;
     }
 
-    public static void getPokemonByName(String name) {
+    public static JsonObject getRandomMove() {
+        int randomNumber = (int) (Math.random() * (MAX_MOVE_LIST - 1) + 1);
+        JsonObject pokemonJson = null;
+        try {
+            pokemonJson = call(MOVEMENT_URL, randomNumber);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 
+        return pokemonJson;
     }
 
-    public static JsonObject call(int randomNumber) throws URISyntaxException, IOException, InterruptedException {
+
+    private static JsonObject call(String url, int randomNumber) throws URISyntaxException, IOException, InterruptedException {
         Gson gson = new Gson();
 
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(new URI("https://pokeapi.co/api/v2/pokemon/" + randomNumber))
+            .uri(new URI(url + randomNumber))
             .GET()
             .build();
 
