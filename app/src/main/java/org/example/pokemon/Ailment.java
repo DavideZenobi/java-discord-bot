@@ -1,13 +1,13 @@
 package org.example.pokemon;
 
-public class Effect {
+public class Ailment {
     
     private int id;
     private String name;
     private String description;
     private int duration;
 
-    public Effect() {
+    public Ailment() {
         
     }
 }

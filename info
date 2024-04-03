@@ -1,0 +1,12 @@
+
+INFO PARA DESARROLLADOR:
+
+PokeAPI:
+    1: La categoría de movimiento DamageLowerMove y DamageRaiseMove tienen nombres que pueden llevar a confusión.
+        - DamageLowerMove se refiere a daño + aumento/reducción de una o más stats DEL POKEMON DEFENSOR
+        - DamageRaiseMove se refiere a daño + aumento/reducción de una o más stats DEL POKEMON QUE LO LANZA
+
+    2: Movimientos que afectan stats:
+        Cabe la posibilidad de que altere más de 1 stat, por eso es una lista (statsNames).
+        La cantidad del cambio siempre es la misma, por eso se coge el dato del primer elemento de la array.
+        En caso de cambiar esto, la lista debería cambiar a Map<nombre, cantidad de cambio>.

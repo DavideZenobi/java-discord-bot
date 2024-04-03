@@ -7,6 +7,7 @@ public class Move {
     private int id;
     private String name;
     private String type; // (grass, water, fire, etc)
+    private String category; //damage, damage+effect, damage+aumentar tu stat, damage+reducir stat defensor
     private String damageClass; // (physical, special, status, -)
     private int power;
     private int accuracy;
