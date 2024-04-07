@@ -1,13 +1,15 @@
 package org.example.battle;
 
 import com.google.gson.JsonObject;
-import org.example.pokemon.tmp.*;
+import org.example.pokemon.enums.Converter;
+import org.example.pokemon.moves.*;
 import org.example.pokemon.enums.Categories;
 
 public class PokeMoveFactory {
 
     public static MoveV2 createPokeMove(JsonObject jsonObject) {
-        Categories moveCategory = Categories.valueOf(jsonObject.get("meta").getAsJsonObject().get("category").getAsJsonObject().get("name").getAsString());
+        System.out.println("Move ID: " + jsonObject.get("id").getAsInt());
+        Categories moveCategory = Converter.fromCategoryStringToCategoryEnum(jsonObject.get("meta").getAsJsonObject().get("category").getAsJsonObject().get("name").getAsString());
         // meta(object) -> category(object) -> name(string)
         return switch (moveCategory) {
             case AILMENT -> AilmentMove.from(jsonObject);

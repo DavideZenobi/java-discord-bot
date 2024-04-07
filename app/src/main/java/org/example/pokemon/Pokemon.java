@@ -6,12 +6,13 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.example.pokemon.enums.Types;
 
 public class Pokemon {
     
     private int id;
     private String name;
-    private List<String> types;
+    private List<Types> types;
     private int hp;
     private int attack;
     private int defense;
@@ -20,7 +21,7 @@ public class Pokemon {
     private int speed;
     private String spriteUrl;
 
-    public Pokemon(int id, String name, List<String> types, int hp, int attack, int defense, int specialAttack, int specialDefense, int speed, String spriteUrl) {
+    public Pokemon(int id, String name, List<Types> types, int hp, int attack, int defense, int specialAttack, int specialDefense, int speed, String spriteUrl) {
         this.id = id;
         this.name = name;
         this.types = types;
@@ -45,9 +46,9 @@ public class Pokemon {
         String spriteUrl = jsonPokemon.get("sprites").getAsJsonObject().get("front_default").getAsString();
         // Esto se hace porque puede haber pokemons que tengan 1 o 2 tipos
         JsonArray typesArray = jsonPokemon.get("types").getAsJsonArray();
-        List<String> types = new ArrayList<>();
+        List<Types> types = new ArrayList<>();
         for (JsonElement typeElement : typesArray) {
-            String typeName = typeElement.getAsJsonObject().get("type").getAsJsonObject().get("name").getAsString();
+            Types typeName = Types.valueOf(typeElement.getAsJsonObject().get("type").getAsJsonObject().get("name").getAsString().toUpperCase());
             types.add(typeName);
         }
 
@@ -140,11 +141,11 @@ public class Pokemon {
         this.spriteUrl = spriteUrl;
     }
 
-    public List<String> getTypes() {
+    public List<Types> getTypes() {
         return types;
     }
 
-    public void setTypes(List<String> types) {
+    public void setTypes(List<Types> types) {
         this.types = types;
     }
 

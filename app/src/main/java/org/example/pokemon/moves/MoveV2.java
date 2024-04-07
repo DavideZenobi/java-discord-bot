@@ -1,4 +1,4 @@
-package org.example.pokemon.tmp;
+package org.example.pokemon.moves;
 
 import org.example.pokemon.enums.Categories;
 import org.example.pokemon.enums.DamageClasses;
@@ -12,6 +12,6 @@ sealed public interface MoveV2 permits DamageMove, DamageAilmentMove, DamageHeal
     Types type();
     Categories category();
     DamageClasses damageClass();
-    int accuracy();
+    Integer accuracy();
     int priority();
 }

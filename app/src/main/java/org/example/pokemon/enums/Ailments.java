@@ -9,18 +9,18 @@ public enum Ailments {
     BURN,
     POISON,
     CONFUSION,
-    INFATUATION,
+    INFATUATION, // Not available, gender stuff
     TRAP,
     NIGHTMARE,
-    TORMENT,
-    DISABLE,
-    YAWN,
-    HEAL_BLOCK,
-    NO_TYPE_IMMUNITY,
-    LEECH_SEED,
-    EMBARGO,
-    PERISH_SONG,
-    INGRAIN,
-    SILENCE,
-    TAR_SHOT
+    TORMENT, // Not available
+    DISABLE, // Not available
+    YAWN, // Not available
+    HEAL_BLOCK, // Not available
+    NO_TYPE_IMMUNITY, // Not available
+    LEECH_SEED, // Not available
+    EMBARGO, // Not available
+    PERISH_SONG, // Not available
+    INGRAIN, // Not available
+    SILENCE, // Not available
+    TAR_SHOT // Not available
 }

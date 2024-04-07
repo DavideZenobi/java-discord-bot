@@ -1,11 +1,9 @@
-package org.example.pokemon.tmp;
+package org.example.pokemon.moves;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.example.pokemon.enums.Categories;
-import org.example.pokemon.enums.DamageClasses;
-import org.example.pokemon.enums.Types;
+import org.example.pokemon.enums.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,31 +22,31 @@ public record DamageRaiseMove(
         Types type,
         Categories category,
         DamageClasses damageClass,
-        int accuracy,
+        Integer accuracy,
         int priority,
         /** Variables de este record */
         int power,
-        List<String> statsNames,
+        List<Stats> statsNames,
         int statChange,
         int statChance,
         int flinchChance
 ) implements MoveV2 {
 
     public static MoveV2 from(JsonObject jsonObject) {
-        List<String> statsNames = new ArrayList<>();
+        List<Stats> statsNames = new ArrayList<>();
         JsonArray jsonArray = jsonObject.get("stat_changes").getAsJsonArray();
         for (JsonElement element : jsonArray) {
-            String statName = element.getAsJsonObject().get("stat").getAsJsonObject().get("name").getAsString();
-            statsNames.add(statName);
+            Stats stat = Converter.fromStatsStringToEnum(element.getAsJsonObject().get("stat").getAsJsonObject().get("name").getAsString());
+            statsNames.add(stat);
         }
 
         return new DamageRaiseMove(
                 jsonObject.get("id").getAsInt(),
                 jsonObject.get("name").getAsString(),
-                Types.valueOf(jsonObject.get("type").getAsJsonObject().get("name").getAsString()),
-                Categories.valueOf(jsonObject.get("meta").getAsJsonObject().get("category").getAsJsonObject().get("name").getAsString()),
-                DamageClasses.valueOf(jsonObject.get("damage_class").getAsJsonObject().get("name").getAsString()),
-                jsonObject.get("accuracy").getAsInt(),
+                Converter.fromTypeStringToEnum(jsonObject.get("type").getAsJsonObject().get("name").getAsString()),
+                Converter.fromCategoryStringToCategoryEnum(jsonObject.get("meta").getAsJsonObject().get("category").getAsJsonObject().get("name").getAsString()),
+                Converter.fromDamageClassesStringToEnum(jsonObject.get("damage_class").getAsJsonObject().get("name").getAsString()),
+                jsonObject.get("accuracy").isJsonNull() ? null : jsonObject.get("accuracy").getAsInt(),
                 jsonObject.get("priority").getAsInt(),
                 jsonObject.get("power").getAsInt(),
                 statsNames,

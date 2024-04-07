@@ -23,7 +23,11 @@ public class BattleHandler {
 
     public static final int MAX_ROUNDS = 10;
     private Map<User, Pokemon> usersPokemons = new HashMap<>();
-    private SlashCommandInteractionEvent event;
+    private User user1;
+    private Pokemon pokemon1;
+    private User user2;
+    private Pokemon pokemon2;
+    private final SlashCommandInteractionEvent event;
     private final DiscordHandler discordHandler;
     private int counter = 1;
     private List<Field> fields = new ArrayList<>();
@@ -34,23 +38,27 @@ public class BattleHandler {
     }
 
     public void startSetup() {
-        User user1 = this.event.getOption("user1").getAsUser();
-        User user2 = this.event.getOption("user2").getAsUser();
+        this.user1 = this.event.getOption("user1").getAsUser();
+        this.user2 = this.event.getOption("user2").getAsUser();
         JsonObject pokemonJson1 = PokeAPI.getRandomPokemon();
         JsonObject pokemonJson2 = PokeAPI.getRandomPokemon();
-        Pokemon pokemon1 = Pokemon.create(pokemonJson1);
-        Pokemon pokemon2 = Pokemon.create(pokemonJson2);
-        this.usersPokemons.put(user1, pokemon1);
-        this.usersPokemons.put(user2, pokemon2);
+        this.pokemon1 = Pokemon.create(pokemonJson1);
+        this.pokemon2 = Pokemon.create(pokemonJson2);
+        this.usersPokemons.put(this.user1, this.pokemon1);
+        this.usersPokemons.put(this.user2, this.pokemon2);
 
         EmbedBuilder embedInfo1 = getEmbedPokemonInfo(pokemon1, user1);
         EmbedBuilder embedInfo2 = getEmbedPokemonInfo(pokemon2, user2);
         discordHandler.sendMessageEmbeds(embedInfo1.build());
         discordHandler.sendMessageEmbeds(embedInfo2.build());
+        System.out.println("Type 1: " + this.pokemon1.getTypes());
+        System.out.println("Type 2: " + this.pokemon2.getTypes());
     }
 
     public void run() {
-        EmbedBuilder embed = new EmbedBuilder();
+        BattleController battleController = new BattleController(this.pokemon1, this.pokemon2);
+        battleController.startBattle();
+        /*EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
         embed.setTitle("**Logs: **");
 
@@ -80,7 +88,7 @@ public class BattleHandler {
                     System.out.println(e);
                 }
             }
-        });
+        });*/
     }
 
     private EmbedBuilder getEmbedPokemonInfo(Pokemon pokemon, User user) {

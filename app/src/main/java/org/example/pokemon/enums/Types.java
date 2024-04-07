@@ -18,6 +18,5 @@ public enum Types {
     DRAGON,
     DARK,
     STEEL,
-    FAIRY,
-    STELLAR
+    FAIRY
 }
