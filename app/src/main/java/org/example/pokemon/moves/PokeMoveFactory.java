@@ -1,4 +1,4 @@
-package org.example.battle;
+package org.example.pokemon.moves;
 
 import com.google.gson.JsonObject;
 import org.example.pokemon.enums.Converter;

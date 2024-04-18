@@ -1,8 +1,10 @@
 package org.example.battle;
 
+import org.example.pokemon.TypeEffectiveness;
 import org.example.pokemon.enums.DamageClasses;
 import org.example.pokemon.enums.Types;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +20,7 @@ public class Calculator {
             int defenderDefense,
             List<Types> defenderType,
             boolean STAB,
-            float crit,
+            boolean crit,
             boolean burned
     ) { }
 
@@ -29,7 +31,12 @@ public class Calculator {
     }
 
     public static int calculateHealingBasedOnDamage(int healingPercentage, int damageDone) {
-        return healingPercentage * damageDone / 100;
+        int healing = healingPercentage * damageDone / 100;
+        if (healing == 0) {
+            return 1;
+        } else {
+            return healing;
+        }
     }
 
     public static int calculateDamage(DamageFormulaData formula) {
@@ -39,11 +46,11 @@ public class Calculator {
         float glaiveRushMultiplier = 1f;
         float critMultiplier = 1f;
         float stabMultiplier = 1f;
-        float typeMultiplier = 1f;
+        float typeEffectivenessMultiplier = 1f;
         float burnMultiplier = 1f;
         float otherMultiplier = 1f;
 
-        if (applyDecimalProbability(formula.crit())) {
+        if (formula.crit) {
             critMultiplier = 1.5f;
         }
 
@@ -54,18 +61,42 @@ public class Calculator {
             stabMultiplier = 1.5f;
         }
 
+        List<Float> multipliers = new ArrayList<>();
+        for (Types defenderType : formula.defenderType) {
+            float multiplier = TypeEffectiveness.getMultiplier(formula.moveType, defenderType);
+            multipliers.add(multiplier);
+        }
+        float result = 1f;
+        for (float multiplier: multipliers) {
+            result *= multiplier;
+        }
+        typeEffectivenessMultiplier = result;
+
         if (formula.burned() && formula.damageClass().equals(DamageClasses.PHYSICAL)) {
             burnMultiplier = 0.5f;
         }
 
-        return (int) (((((2 * formula.level() / 5 + 2) * formula.movePower() * formula.attackerPower() / formula.defenderDefense()) / 50) + 2) *
+        int damage = (int) (((((2 * formula.level() / 5 + 2) * formula.movePower() * formula.attackerPower() / formula.defenderDefense()) / 50) + 2) *
                 targetMultiplier * PBMultiplier * weatherMultiplier * glaiveRushMultiplier * critMultiplier *
-                randomMultiplier * stabMultiplier * typeMultiplier * burnMultiplier * otherMultiplier);
+                randomMultiplier * stabMultiplier * typeEffectivenessMultiplier * burnMultiplier * otherMultiplier);
+
+        if (damage == 0) {
+            return 1;
+        } else {
+            return damage;
+        }
+    }
+
+    public static int calculatePercentageDamage(float percentage, int maxHp) {
+        return (int) percentage * maxHp / 100;
     }
 
     public static float calculateProbabilityToHit(int moveAccuracy, float attackerAccuracy, float defenderEvasion) {
         return moveAccuracy * (attackerAccuracy / 100) * (1 - (defenderEvasion / 100));
-        // return = (moveAccuracy / 100) * (attackerAccuracy/100) / (defenderEvasion/100);
+    }
+
+    public static float calculateProbabilityToHitWithoutEvasion(int moveAccuracy, float attackerAccuracy) {
+        return moveAccuracy * (attackerAccuracy / 100);
     }
 
     public static boolean applyProbability(int probability) {

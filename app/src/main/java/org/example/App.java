@@ -5,29 +5,45 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
-public class App extends ListenerAdapter {
+import java.util.concurrent.Executors;
+
+public class App {
 
     public static void main(String[] args) throws InterruptedException {
 
         Dotenv dotenv = Dotenv.load();
         
-        JDA bot = JDABuilder.createDefault(dotenv.get("BOT_TOKEN"))
-            .setActivity(Activity.playing("WoW Test"))
+        JDA bot = JDABuilder.createDefault(dotenv.get("BOT_TOKEN"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                .setEventPool(Executors.newFixedThreadPool(100))
+            .setActivity(Activity.playing("Type /battle"))
             .addEventListeners(new BotCommands())
             .build().awaitReady();
 
-        Guild guild = bot.getGuildById(1215437494732980244L);
+        /**
+         *  Global command
+         * */
+        bot.updateCommands().addCommands(
+                Commands.slash("battle", "Start randomized pokemon battle between 2 users")
+                        .setGuildOnly(true)
+                        .addOption(OptionType.USER, "user1", "First user", true)
+                        .addOption(OptionType.USER, "user2", "Second user", true)
+                        .addOption(OptionType.INTEGER, "total", "Maximum: 6 - Default: 1", false)
+        ).queue();
 
-        if (guild != null) {
-            guild.upsertCommand("battle", "Start battle between 2 users")
-                .addOption(OptionType.USER, "user1", "First user", true)
-                .addOption(OptionType.USER, "user2", "Second user", true)
-                .queue();
-            
-            guild.upsertCommand("test", "Test slash command").queue();
-        }
+        /**
+         *  Guild command
+         * */
+        long testGuildId = 1215437494732980244L;
+        Guild guild = bot.getGuildById(testGuildId);
+        guild.updateCommands().addCommands(
+                Commands.slash("test", "Test Command")
+                        .addOption(OptionType.USER, "user1", "First user", true)
+                        .addOption(OptionType.USER, "user2", "Second user", true)
+                        .addOption(OptionType.INTEGER, "total", "Maximum: 6 - Default: 1", false)
+        ).queue();
     }
 }

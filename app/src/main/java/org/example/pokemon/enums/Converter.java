@@ -25,6 +25,9 @@ public class Converter {
             case "all-opponents" -> Targets.ALL_OPPONENTS;
             case "all-other-pokemon" -> Targets.ALL_OTHER_POKEMON;
             case "selected-pokemon" -> Targets.SELECTED_POKEMON;
+            case "user-and-allies" -> Targets.USER_AND_ALLIES;
+            case "all-pokemon" -> Targets.ALL_POKEMON;
+            case "ally" -> Targets.ALLY;
             default -> throw new IllegalStateException("Unexpected value: " + targetString);
         };
     }

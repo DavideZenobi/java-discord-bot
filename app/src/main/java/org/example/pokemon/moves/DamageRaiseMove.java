@@ -29,7 +29,9 @@ public record DamageRaiseMove(
         List<Stats> statsNames,
         int statChange,
         int statChance,
-        int flinchChance
+        int flinchChance,
+        int minHits,
+        int maxHits
 ) implements MoveV2 {
 
     public static MoveV2 from(JsonObject jsonObject) {
@@ -46,13 +48,15 @@ public record DamageRaiseMove(
                 Converter.fromTypeStringToEnum(jsonObject.get("type").getAsJsonObject().get("name").getAsString()),
                 Converter.fromCategoryStringToCategoryEnum(jsonObject.get("meta").getAsJsonObject().get("category").getAsJsonObject().get("name").getAsString()),
                 Converter.fromDamageClassesStringToEnum(jsonObject.get("damage_class").getAsJsonObject().get("name").getAsString()),
-                jsonObject.get("accuracy").isJsonNull() ? null : jsonObject.get("accuracy").getAsInt(),
+                jsonObject.get("accuracy").isJsonNull() ? 100 : jsonObject.get("accuracy").getAsInt(),
                 jsonObject.get("priority").getAsInt(),
                 jsonObject.get("power").getAsInt(),
                 statsNames,
                 jsonObject.get("stat_changes").getAsJsonArray().get(0).getAsJsonObject().get("change").getAsInt(),
                 jsonObject.get("meta").getAsJsonObject().get("stat_chance").getAsInt(),
-                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt()
+                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("min_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("min_hits").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("max_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("max_hits").getAsInt()
         );
     }
 

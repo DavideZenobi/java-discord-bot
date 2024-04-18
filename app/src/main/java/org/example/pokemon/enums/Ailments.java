@@ -3,15 +3,15 @@ package org.example.pokemon.enums;
 public enum Ailments {
     UNKNOWN,
     NONE,
-    PARALYSIS,
-    SLEEP,
-    FREEZE,
-    BURN,
-    POISON,
+    PARALYSIS, // Infinite turns
+    SLEEP, // 1-3 turns
+    FREEZE, // Infinite turns. 20% de descongelarse
+    BURN, // Damage end turn
+    POISON, // Damage end turn
     CONFUSION,
     INFATUATION, // Not available, gender stuff
-    TRAP,
-    NIGHTMARE,
+    TRAP, // Not available
+    NIGHTMARE, // Not available
     TORMENT, // Not available
     DISABLE, // Not available
     YAWN, // Not available

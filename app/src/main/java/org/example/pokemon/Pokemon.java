@@ -7,6 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.example.pokemon.enums.Types;
+import org.example.utils.TextFormatter;
 
 public class Pokemon {
     
@@ -36,7 +37,7 @@ public class Pokemon {
 
     public static Pokemon create(JsonObject jsonPokemon) {
         int id = jsonPokemon.get("id").getAsInt();
-        String name = jsonPokemon.get("name").getAsString();
+        String name = TextFormatter.formatPokemonName(jsonPokemon.get("name").getAsString());
         int hp = jsonPokemon.get("stats").getAsJsonArray().get(0).getAsJsonObject().get("base_stat").getAsInt();
         int attack = jsonPokemon.get("stats").getAsJsonArray().get(1).getAsJsonObject().get("base_stat").getAsInt();
         int defense = jsonPokemon.get("stats").getAsJsonArray().get(2).getAsJsonObject().get("base_stat").getAsInt();

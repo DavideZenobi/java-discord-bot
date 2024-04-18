@@ -1,10 +1,7 @@
 package org.example.battle;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -21,18 +18,22 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 
 public class BattleHandler {
 
-    public static final int MAX_ROUNDS = 10;
+    UUID uuid;
+
+    public static final int MAX_ROUNDS = 5;
     private Map<User, Pokemon> usersPokemons = new HashMap<>();
     private User user1;
     private Pokemon pokemon1;
     private User user2;
     private Pokemon pokemon2;
+    private int pokemonsPerTeam;
     private final SlashCommandInteractionEvent event;
     private final DiscordHandler discordHandler;
     private int counter = 1;
     private List<Field> fields = new ArrayList<>();
 
     public BattleHandler(DiscordHandler discordHandler, SlashCommandInteractionEvent event) {
+        this.uuid = UUID.randomUUID();
         this.discordHandler = discordHandler;
         this.event = event;
     }
@@ -49,14 +50,22 @@ public class BattleHandler {
 
         EmbedBuilder embedInfo1 = getEmbedPokemonInfo(pokemon1, user1);
         EmbedBuilder embedInfo2 = getEmbedPokemonInfo(pokemon2, user2);
-        discordHandler.sendMessageEmbeds(embedInfo1.build());
-        discordHandler.sendMessageEmbeds(embedInfo2.build());
-        System.out.println("Type 1: " + this.pokemon1.getTypes());
-        System.out.println("Type 2: " + this.pokemon2.getTypes());
+        //discordHandler.sendMessageEmbeds(embedInfo1.build());
+        //discordHandler.sendMessageEmbeds(embedInfo2.build());
+    }
+
+    public void startMultipleSetup() {
+        this.user1 = this.event.getOption("user1").getAsUser();
+        this.user2 = this.event.getOption("user2").getAsUser();
+        this.pokemonsPerTeam = this.event.getOption("total").getAsInt();
+
+        List<JsonObject> pokemonsJson1 = PokeAPI.getMultipleRandomPokemons(this.pokemonsPerTeam);
+        List<JsonObject> pokemonsJson2 = PokeAPI.getMultipleRandomPokemons(this.pokemonsPerTeam);
+
     }
 
     public void run() {
-        BattleController battleController = new BattleController(this.pokemon1, this.pokemon2);
+        BattleController battleController = new BattleController(this.uuid, this.pokemon1, this.pokemon2);
         battleController.startBattle();
         /*EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
@@ -89,6 +98,10 @@ public class BattleHandler {
                 }
             }
         });*/
+    }
+
+    public void runv2() {
+
     }
 
     private EmbedBuilder getEmbedPokemonInfo(Pokemon pokemon, User user) {

@@ -7,7 +7,9 @@ import org.example.pokemon.enums.Types;
 import org.example.pokemon.moves.MoveV2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  Accuracy y evasion son valores porcentuales (%)
@@ -44,10 +46,12 @@ public class PokemonState {
     private int critModifier;
     private int level;
     private List<Ailment> ailments;
+    private Map<Ailment, Integer> ailmentsV2;
     private List<Ailments> ailmentsEnum;
     private MoveV2 move;
 
     private boolean flinched;
+    private String spriteUrl;
 
     public PokemonState(Pokemon pokemon) {
         this.name = pokemon.getName();
@@ -72,14 +76,18 @@ public class PokemonState {
         this.specialDefenseModifier = 0;
         this.speedModifier = 0;
         this.baseAccuracy = 100;
+        this.currentAccuracy = 100;
         this.accuracyModifier = 0;
         this.baseEvasion = 0;
+        this.currentEvasion = 0;
         this.evasionModifier = 0;
         this.critModifier = 0;
-        this.level = 1;
+        this.level = 10;
         this.ailments = new ArrayList<>();
+        this.ailmentsV2 = new HashMap<>();
         this.ailmentsEnum = new ArrayList<>();
         this.flinched = false;
+        this.spriteUrl = pokemon.getSpriteUrl();
     }
 
     public void applyModifiers() {
@@ -459,4 +467,19 @@ public class PokemonState {
         this.baseEvasion = baseEvasion;
     }
 
+    public Map<Ailment, Integer> getAilmentsV2() {
+        return ailmentsV2;
+    }
+
+    public void setAilmentsV2(Map<Ailment, Integer> ailmentsV2) {
+        this.ailmentsV2 = ailmentsV2;
+    }
+
+    public String getSpriteUrl() {
+        return spriteUrl;
+    }
+
+    public void setSpriteUrl(String spriteUrl) {
+        this.spriteUrl = spriteUrl;
+    }
 }

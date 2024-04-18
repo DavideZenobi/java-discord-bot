@@ -19,7 +19,9 @@ public record DamageHealMove(
         int power,
         // El drain/healing es % del daño infligido
         int drain,
-        int flinchChance
+        int flinchChance,
+        int minHits,
+        int maxHits
 ) implements MoveV2 {
 
     public static MoveV2 from(JsonObject jsonObject) {
@@ -33,7 +35,9 @@ public record DamageHealMove(
                 jsonObject.get("priority").getAsInt(),
                 jsonObject.get("power").getAsInt(),
                 jsonObject.get("meta").getAsJsonObject().get("drain").getAsInt(),
-                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt()
+                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("min_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("min_hits").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("max_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("max_hits").getAsInt()
         );
     }
 

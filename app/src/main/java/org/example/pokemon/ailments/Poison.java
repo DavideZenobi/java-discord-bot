@@ -1,4 +1,8 @@
 package org.example.pokemon.ailments;
 
-public class Poison {
+public record Poison (
+        int minTurns,
+        int maxTurns,
+        int currentTurn
+) implements Ailment {
 }

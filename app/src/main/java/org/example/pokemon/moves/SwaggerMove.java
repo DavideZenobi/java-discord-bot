@@ -44,8 +44,8 @@ public record SwaggerMove(
                 jsonObject.get("priority").getAsInt(),
                 statsNames,
                 jsonObject.get("stat_changes").getAsJsonArray().get(0).getAsJsonObject().get("change").getAsInt(),
-                jsonObject.get("meta").getAsJsonObject().get("min_turns").isJsonNull() ? null : jsonObject.get("meta").getAsJsonObject().get("min_turns").getAsInt(),
-                jsonObject.get("meta").getAsJsonObject().get("max_turns").isJsonNull() ? null : jsonObject.get("meta").getAsJsonObject().get("max_turns").getAsInt()
+                jsonObject.get("meta").getAsJsonObject().get("min_turns").isJsonNull() ? 99 : jsonObject.get("meta").getAsJsonObject().get("min_turns").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("max_turns").isJsonNull() ? 99 : jsonObject.get("meta").getAsJsonObject().get("max_turns").getAsInt()
         );
     }
 

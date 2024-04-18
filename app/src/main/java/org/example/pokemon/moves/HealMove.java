@@ -28,7 +28,7 @@ public record HealMove(
                 Converter.fromTypeStringToEnum(jsonObject.get("type").getAsJsonObject().get("name").getAsString()),
                 Converter.fromCategoryStringToCategoryEnum(jsonObject.get("meta").getAsJsonObject().get("category").getAsJsonObject().get("name").getAsString()),
                 Converter.fromDamageClassesStringToEnum(jsonObject.get("damage_class").getAsJsonObject().get("name").getAsString()),
-                jsonObject.get("accuracy").isJsonNull() ? null : jsonObject.get("accuracy").getAsInt(),
+                jsonObject.get("accuracy").isJsonNull() ? 100 : jsonObject.get("accuracy").getAsInt(),
                 jsonObject.get("priority").getAsInt(),
                 jsonObject.get("meta").getAsJsonObject().get("healing").getAsInt()
         );

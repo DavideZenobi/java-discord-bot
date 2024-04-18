@@ -57,8 +57,8 @@ public class PokeAPI {
             640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654, 655, 656, 657, 698, 717, 732,
             741);
 
-    private static final List<Integer> FORBIDDEN_AILMENT_MOVES_EXCLUDED = Arrays.asList(193, 195, 213, 259, 275, 281,
-            316, 357, 373, 377, 477, 749);
+    private static final List<Integer> FORBIDDEN_AILMENT_MOVES_EXCLUDED = Arrays.asList(171, 193, 195, 213, 259, 275, 281,
+            316, 357, 373, 377, 477, 675, 749);
 
     static {
         int bannedMoves = ONE_HIT_KO_MOVES_EXCLUDED.size() + WHOLE_FIELD_EFFECT_MOVES_EXCLUDED.size() +
@@ -81,6 +81,26 @@ public class PokeAPI {
         }
 
         return pokemonJson;
+    }
+
+    public static List<JsonObject> getMultipleRandomPokemons(int totalOfPokemons) {
+        List<JsonObject> pokemonsJson = new ArrayList<>();
+        List<Integer> duplicatedPokemons = new ArrayList<>();
+
+        for (int i = 0; i < totalOfPokemons; i++) {
+            int randomNumber = (int) (Math.random() * (MAX_POKEMON_LIST - 1) + 1);
+            JsonObject pokemonJson = null;
+            try {
+                pokemonJson = call(POKEMON_URL, randomNumber);
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+
+            duplicatedPokemons.add(randomNumber);
+            pokemonsJson.add(pokemonJson);
+        }
+
+        return pokemonsJson;
     }
 
     public static JsonObject getRandomMove() {

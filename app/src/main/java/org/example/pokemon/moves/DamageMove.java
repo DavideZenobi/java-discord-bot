@@ -16,9 +16,11 @@ public record DamageMove(
         int priority,
         /** Variables de este record */
         int power,
-        int flinchChance
+        int flinchChance,
+        int minHits,
+        int maxHits
 
-) implements MoveV2, Damage {
+) implements MoveV2 {
 
     public static MoveV2 from(JsonObject jsonObject) {
         return new DamageMove(
@@ -30,7 +32,9 @@ public record DamageMove(
                 jsonObject.get("accuracy").isJsonNull() ? 100 : jsonObject.get("accuracy").getAsInt(),
                 jsonObject.get("priority").getAsInt(),
                 jsonObject.get("power").getAsInt(),
-                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt()
+                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("min_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("min_hits").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("max_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("max_hits").getAsInt()
         );
     }
 }

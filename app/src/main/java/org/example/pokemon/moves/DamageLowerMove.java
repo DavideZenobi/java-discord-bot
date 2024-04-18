@@ -29,7 +29,9 @@ public record DamageLowerMove(
         List<Stats> statsNames,
         int statChange,
         int statChance,
-        int flinchChance
+        int flinchChance,
+        int minHits,
+        int maxHits
 ) implements MoveV2 {
 
     public static MoveV2 from(JsonObject jsonObject) {
@@ -52,7 +54,9 @@ public record DamageLowerMove(
                 statsNames,
                 jsonObject.get("stat_changes").getAsJsonArray().get(0).getAsJsonObject().get("change").getAsInt(),
                 jsonObject.get("meta").getAsJsonObject().get("stat_chance").getAsInt(),
-                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt()
+                jsonObject.get("meta").getAsJsonObject().get("flinch_chance").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("min_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("min_hits").getAsInt(),
+                jsonObject.get("meta").getAsJsonObject().get("max_hits").isJsonNull() ? 1 : jsonObject.get("meta").getAsJsonObject().get("max_hits").getAsInt()
         );
     }
 
