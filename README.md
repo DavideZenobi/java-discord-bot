@@ -4,6 +4,8 @@ Random Pokemon Fight is a discord bot that generates completely randomized battl
 <br>
 Command: /battle @user1 @user2 @total of pokemons(optional, default: 1, max: 6)
 <br>
+[Invite now](https://discord.com/oauth2/authorize?client_id=1230548300944510997&permissions=2147485696&scope=bot)
+<br>
 <br>
 ![command](https://github.com/DavideZenobi/java-discord-bot/assets/55576514/5903f7ef-a5ce-4b49-bc36-74a30ab062ce)
 ![battle1](https://github.com/DavideZenobi/java-discord-bot/assets/55576514/24f46742-56a1-4ced-93df-bfb993bc60a8)
