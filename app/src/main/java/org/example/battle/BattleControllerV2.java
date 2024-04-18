@@ -18,7 +18,6 @@ public class BattleControllerV2 {
     private final SlashCommandInteractionEvent event;
     private final DiscordHandler discordHandler;
     private final LoggerV2 loggerV2;
-    private final int MAX_TURNS = 100;
     private int currentTurn;
     private boolean hasGameFinished;
     private Map<User, List<PokemonState>> usersPokemons;
@@ -72,7 +71,7 @@ public class BattleControllerV2 {
         this.loggerV2.setNewBattle(this.activePokemon1.getName(), this.activePokemon2.getName());
         //this.loggerV2.setNewBattle(this.currentTurn, this.activePokemon1.getName(), this.activePokemon2.getName());
 
-        while (this.currentTurn <= this.MAX_TURNS) {
+        while (true) {
             this.loggerV2.saveNewTurn(this.currentTurn);
             boolean isActivePokemon1Dead = false;
             boolean isActivePokemon2Dead = false;
