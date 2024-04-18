@@ -17,7 +17,7 @@ Examples:
 - More...
 <br>
 <br>
-Credits: All the data related to the pokemons is taken from the [PokeApi](https://pokeapi.co/)
+Credits: All the data related to the pokemons is taken from the :link: [PokeApi](https://pokeapi.co/)
 <br>
 <br>
 ![command](https://github.com/DavideZenobi/java-discord-bot/assets/55576514/5903f7ef-a5ce-4b49-bc36-74a30ab062ce)
