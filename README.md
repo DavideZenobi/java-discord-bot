@@ -7,6 +7,7 @@ Command: /battle @user1 @user2 @total of pokemons(optional, default: 1, max: 6)
 <br>
 [Invite now](https://discord.com/oauth2/authorize?client_id=1230548300944510997&permissions=2147485696&scope=bot)
 <br>
+<br>
 Credits: All the data related to the pokemons is taken from the [PokeApi](https://pokeapi.co/)
 <br>
 <br>
