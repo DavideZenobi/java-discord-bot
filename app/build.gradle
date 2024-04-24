@@ -40,3 +40,13 @@ application {
     // Define the main class for the application.
     mainClass = 'org.example.App'
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+
+    archiveFileName = 'bot.jar'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
