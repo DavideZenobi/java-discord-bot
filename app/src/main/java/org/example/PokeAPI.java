@@ -58,7 +58,7 @@ public class PokeAPI {
             741);
 
     private static final List<Integer> FORBIDDEN_AILMENT_MOVES_EXCLUDED = Arrays.asList(171, 193, 195, 213, 259, 275, 281,
-            316, 357, 373, 377, 477, 675, 749);
+            316, 357, 373, 377, 477, 675, 738, 749);
 
     static {
         int bannedMoves = ONE_HIT_KO_MOVES_EXCLUDED.size() + WHOLE_FIELD_EFFECT_MOVES_EXCLUDED.size() +

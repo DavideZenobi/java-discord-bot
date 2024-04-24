@@ -31,7 +31,7 @@ public class App {
                         .setGuildOnly(true)
                         .addOption(OptionType.USER, "user1", "First user", true)
                         .addOption(OptionType.USER, "user2", "Second user", true)
-                        .addOption(OptionType.INTEGER, "total", "Maximum: 6 - Default: 1", false)
+                        .addOption(OptionType.INTEGER, "pokemonsxteam", "Maximum: 6 - Default: 1", false)
         ).queue();
 
         /**

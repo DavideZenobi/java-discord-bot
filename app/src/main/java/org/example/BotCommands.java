@@ -61,7 +61,7 @@ public class BotCommands extends ListenerAdapter {
         } else {
             this.guildsBattlesStarted.add(event.getGuild().getId());
             event.deferReply().complete();
-            OptionMapping totalOption = event.getOption("total");
+            OptionMapping totalOption = event.getOption("pokemonsxteam");
             int pokemonsPerTeam;
             if (totalOption == null) {
                 pokemonsPerTeam = 1; // Default
