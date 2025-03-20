@@ -1,11 +1,14 @@
 # Random Pokémon Fight
 
+> [!CAUTION]
+> **_Can't play anymore_**
+> <br>
+> This is a personal project with the goal of continuing to learn. It doesn't make sense to keep paying for servers, a domain, etc.
+>
+
 Random Pokémon Fight is a discord bot that generates completely randomized battles between 2 users.
 <br>
 Command: /battle @user1 @user2 @total of pokemons(optional, default: 1, max: 6)
-<br>
-<br>
-:link: [Invite now](https://discord.com/oauth2/authorize?client_id=1230548300944510997&permissions=2147485696&scope=bot)
 <br>
 <br>
 Credits: All the data related to the pokemons is taken from the :link: [PokeApi](https://pokeapi.co/)
